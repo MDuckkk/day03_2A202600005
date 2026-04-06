@@ -1,10 +1,12 @@
 import time
+import os
 from typing import Dict, Any, Optional, Generator
 from openai import OpenAI
 from src.core.llm_provider import LLMProvider
 
 class OpenAIProvider(LLMProvider):
-    def __init__(self, model_name: str = "gpt-4o", api_key: Optional[str] = None):
+    def __init__(self, model_name: Optional[str] = None, api_key: Optional[str] = None):
+        model_name = model_name or os.getenv("DEFAULT_MODEL") or "gpt-4o"
         super().__init__(model_name, api_key)
         self.client = OpenAI(api_key=self.api_key)
 

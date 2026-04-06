@@ -5,7 +5,8 @@ from typing import Dict, Any, Optional, Generator
 from src.core.llm_provider import LLMProvider
 
 class GeminiProvider(LLMProvider):
-    def __init__(self, model_name: str = "gemini-3.0-flash", api_key: Optional[str] = None):
+    def __init__(self, model_name: Optional[str] = None, api_key: Optional[str] = None):
+        model_name = model_name or os.getenv("DEFAULT_MODEL") or "gemini-3.0-flash"
         super().__init__(model_name, api_key)
         genai.configure(api_key=self.api_key)
         self.model = genai.GenerativeModel(model_name)
